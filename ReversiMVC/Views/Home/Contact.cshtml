@@ -4,14 +4,26 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<table id="chessBoard">
+    @{
+        for ( int i = 1; i <= 8; i++ )
+        {
+            <tr>
+                @for ( int j = 1; j <= 8; j++ )
+                {
+                    <td id='@i@j' class='@(((i + j) % 2 == 0) ? "white" : "black")'>
+                        <span></span>
+                        <p></p>
+                        @foreach ( var pieces in Model.pieces )
+                        {
+                            if ( pieces.col == j && pieces.row == i )
+                            {
+                                <div id='@pieces.id' class='@pieces.color@pieces.name' data-color='@pieces.color'></div>
+                            }
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    }
+</table>
