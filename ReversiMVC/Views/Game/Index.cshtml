@@ -1,24 +1,22 @@
 ﻿@{
-    ViewBag.Title = "Reversi game";
+    ViewBag.Title = "Reversi - Menu";
 }
 
+<div style="margin-top: 200px; margin: auto">
+    @using ( Html.BeginForm( "Setup", "Game", FormMethod.Post ) )
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Nowa gra" />
+        
+        @Html.TextBox( "param" )
+    }
 
-<table class="board" style="border-collapse:collapse">
-    @{
-        for ( int i = 0; i < 8; i++ )
+    @if ( Model == true )
+    {
+        using ( Html.BeginForm( "Setup", "Game", FormMethod.Post ) )
         {
-            <tr>
-                @for ( int j = 0; j < 8; j++ )
-                {
-                    <td>
-                        @using ( Html.BeginForm( "Index", "Game", FormMethod.Get ) )
-                        {
-                            <input type="submit" value="" class="@Model[ i, j ]" />
-                            <input type="hidden" name="field" value="@i@j" />
-                        }
-                    </td>
-                }
-            </tr>
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Wznów grę" />
         }
     }
-</table>
+</div>

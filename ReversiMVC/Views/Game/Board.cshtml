@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Reversi - Gra";
+}
+
+<table class="board">
+    @{
+        for ( int i = 0; i < 8; i++ )
+        {
+            <tr>
+                @for ( int j = 0; j < 8; j++ )
+                {
+                    <td>
+                        @using ( Html.BeginForm( "Board", "Game", FormMethod.Post ) )
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="" class="@Model.Board.Fields[ i, j ]" />
+                            <input type="hidden" name="field" value="@i@j" />
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    }
+</table>

@@ -19,7 +19,7 @@ table, th, td {
     background: green;
 }
 
-input {
+.board input {
     width: 80px;
     height: 80px;
     border: 0px solid #333;
@@ -27,18 +27,18 @@ input {
     align-self: center;
 }
 
-input:hover{
+.board input:hover{
 
 }
 
-.Empty{
+.board .Empty{
     background: green;
 }
 
-.White{
+.board .White{
     background: white;
 }
 
-.Black{
+.board .Black{
     background: black;
 }

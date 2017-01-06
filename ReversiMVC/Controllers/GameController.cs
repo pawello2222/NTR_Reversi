@@ -7,24 +7,6 @@ using System.Web.Mvc;
 
 namespace ReversiMVC.Controllers
 {
-    public interface IStateManager<T>
-    {
-        void save( string name, T state );
-        T load( string name );
-    }
-
-    public class SessionStateManager<T> : IStateManager<T>
-    {
-        public void save( string name, T state )
-        {
-            HttpContext.Current.Session[ name ] = state;
-        }
-        public T load( string name )
-        {
-            return ( T ) HttpContext.Current.Session[ name ];
-        }
-    }
-
     public class GameController : Controller
     {
         protected IStateManager<Game> stateManager = new SessionStateManager<Game>();
@@ -33,11 +15,52 @@ namespace ReversiMVC.Controllers
             stateManager = manager;
         }
 
-        public ActionResult Index( string field )
+        public ActionResult Index()
+        {
+            Game game = stateManager.load( "game" );
+
+            return View( game != null );
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Setup( int? param )
+        {
+            Game game;
+            int level;
+
+            if ( param != null )
+            {
+                level = param ?? default( int );
+                game = new Game( level );
+                stateManager.save( "game", game );
+            }
+            else
+            {
+                game = stateManager.load( "game" );
+                if ( game == null )
+                    return View( "Index", false );
+            }
+
+            return RedirectToAction( "Board" );
+        }
+
+        public ActionResult Board()
         {
             Game game = stateManager.load( "game" );
             if ( game == null )
-                game = new Game( 1 );
+                return View( "Index", false );
+
+            return View( game );
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Board( string field )
+        {
+            Game game = stateManager.load( "game" );
+            if ( game == null )
+                return View( "Index", false );
 
             if ( field != null && field != string.Empty )
             {
@@ -49,11 +72,16 @@ namespace ReversiMVC.Controllers
                 {
                     game.PlayPieceAI();
                 }
+
+                if ( game.Board.IsEndOfGame() )
+                {
+                    game.CurrentGameState = GameState.GameEnded;
+                }
             }
 
             stateManager.save( "game", game );
 
-            return View( game.Board.Fields );
+            return View( "Board", game );
         }
     }
 }

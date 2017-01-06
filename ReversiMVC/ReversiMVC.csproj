@@ -149,7 +149,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -158,10 +157,12 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\IMoveProvider.cs" />
+    <Compile Include="Models\IStateManager.cs" />
     <Compile Include="Models\MinMaxMoveProvider.cs" />
     <Compile Include="Models\PieceColor.cs" />
     <Compile Include="Models\PieceMove.cs" />
     <Compile Include="Models\PiecePosition.cs" />
+    <Compile Include="Models\SessionStateManager.cs" />
     <Compile Include="Models\Winner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -200,10 +201,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Game\Board.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
