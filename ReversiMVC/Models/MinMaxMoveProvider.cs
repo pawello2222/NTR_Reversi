@@ -36,7 +36,7 @@ namespace ReversiMVC.Models
             foreach ( PieceMove validMove in validMoves )
             {
                 var tmpBoard = new Board( board );
-                tmpBoard.PlayPawn( validMove );
+                tmpBoard.PlayPiece( validMove );
 
                 int v = this.MinMax( tmpBoard, this.GetNextColor( pieceColor ), alpha, Beta, 1 );
                 if ( v > alpha )
@@ -81,7 +81,7 @@ namespace ReversiMVC.Models
                 foreach ( PieceMove validMove in validMoves )
                 {
                     var tmpBoard = new Board( board );
-                    tmpBoard.PlayPawn( validMove );
+                    tmpBoard.PlayPiece( validMove );
 
                     alpha = Math.Max( alpha, this.MinMax( tmpBoard, this.GetNextColor( pieceColor ), alpha, beta, depth + 1 ) );
 
@@ -98,7 +98,7 @@ namespace ReversiMVC.Models
             foreach ( PieceMove validMove in validMoves )
             {
                 var tmpBoard = new Board( board );
-                tmpBoard.PlayPawn( validMove );
+                tmpBoard.PlayPiece( validMove );
 
                 beta = Math.Min( beta, this.MinMax( tmpBoard, this.GetNextColor( pieceColor ), alpha, beta, depth + 1 ) );
 

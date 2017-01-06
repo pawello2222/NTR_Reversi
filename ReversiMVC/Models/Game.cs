@@ -31,11 +31,11 @@ namespace ReversiMVC.Models
             this.Turn = PieceColor.Black;
         }
 
-        public PieceColor GetHumanPawnColor()
+        public PieceColor GetHumanPieceColor()
         {
             if ( this.CurrentGameState != GameState.PlayingHumanComputer )
             {
-                throw new Exception( "GetHumanPawnColor can be only called when game is AI vs. Human" );
+                throw new Exception( "GetHumanPieceColor can be only called when game is AI vs. Human" );
             }
 
             return this.humanPieceColor;
@@ -95,18 +95,18 @@ namespace ReversiMVC.Models
             this.humanPieceColor = humanPieceColor;
         }
 
-        public void PlayPawnAI()
+        public void PlayPieceAI()
         {
-            this.Board.PlayPawn( this.moveProvider.GetNextMove( this.Board, this.Turn ) );
+            this.Board.PlayPiece( this.moveProvider.GetNextMove( this.Board, this.Turn ) );
             this.NextTurn();
         }
 
-        public bool PlayPawnHuman( PiecePosition piecePosition )
+        public bool PlayPieceHuman( PiecePosition piecePosition )
         {
             var pieceMove = new PieceMove( this.CurrentGameState == GameState.PlayingHumanComputer ? this.humanPieceColor : this.Turn, piecePosition );
             if ( this.Board.ValidateMove( pieceMove, false ) )
             {
-                this.Board.PlayPawn( pieceMove );
+                this.Board.PlayPiece( pieceMove );
                 this.NextTurn();
 
                 return true;

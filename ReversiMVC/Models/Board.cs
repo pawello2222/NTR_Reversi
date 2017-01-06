@@ -77,7 +77,7 @@ namespace ReversiMVC.Models
             return moves;
         }
 
-        public int GetPawnsCount( PieceColor pieceColor )
+        public int GetPiecesCount( PieceColor pieceColor )
         {
             int score = 0;
 
@@ -103,7 +103,7 @@ namespace ReversiMVC.Models
                    || this.Fields.Cast<Field>().All( f => f != Field.Empty );
         }
 
-        public void PlayPawn( PieceMove pieceMove )
+        public void PlayPiece( PieceMove pieceMove )
         {
             if ( pieceMove == null )
             {

@@ -33,18 +33,27 @@ namespace ReversiMVC.Controllers
             stateManager = manager;
         }
 
-        public ActionResult Index()
+        public ActionResult Index( string field )
         {
             Game game = stateManager.load( "game" );
             if ( game == null )
                 game = new Game( 1 );
 
-            var x = game.Board.Fields[ 1, 1 ].ToString();
+            if ( field != null && field != string.Empty )
+            {
+                int row = field[ 0 ] - '0';
+                int column = field[ 1 ] - '0';
+                PiecePosition piecePosition = new PiecePosition( row, column );
 
+                if ( game.PlayPieceHuman( piecePosition ) )
+                {
+                    game.PlayPieceAI();
+                }
+            }
 
             stateManager.save( "game", game );
 
-            return View( game );
+            return View( game.Board.Fields );
         }
     }
 }
