@@ -26,6 +26,12 @@ namespace ReversiMVC
             bundles.Add( new StyleBundle( "~/Content/css" ).Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css" ) );
+
+            bundles.Add( new StyleBundle( "~/Board/css" ).Include(
+                      "~/Content/Board.css" ) );
+
+            bundles.Add( new StyleBundle( "~/Menu/css" ).Include(
+                      "~/Content/Menu.css" ) );
         }
     }
 }

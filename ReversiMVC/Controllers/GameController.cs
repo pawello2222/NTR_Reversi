@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,20 +20,29 @@ namespace ReversiMVC.Controllers
         {
             Game game = stateManager.load( "game" );
 
-            return View( game != null );
+            return View( game != null && game.CurrentGameState != GameState.GameEnded );
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Setup( int? param )
+        public ActionResult Setup( int? levelDifficulty, string color )
         {
             Game game;
             int level;
 
-            if ( param != null )
+            if ( levelDifficulty != null && color != null )
             {
-                level = param ?? default( int );
+                level = levelDifficulty ?? default( int );
                 game = new Game( level );
+
+                if ( color == PieceColor.Black.ToString() )
+                    game.PlayHumanComputer( PieceColor.Black );
+                else
+                {
+                    game.PlayHumanComputer( PieceColor.White );
+                    game.PlayPieceAI();
+                }
+
                 stateManager.save( "game", game );
             }
             else
@@ -50,6 +60,26 @@ namespace ReversiMVC.Controllers
             Game game = stateManager.load( "game" );
             if ( game == null )
                 return View( "Index", false );
+
+            if ( game.CurrentGameState == GameState.GameEnded )
+            {
+                string winnerText;
+                Winner winner = game.GetWinner();
+                switch ( winner )
+                {
+                    case Winner.Black:
+                        winnerText = "Czarne wygrywają!";
+                        break;
+                    case Winner.White:
+                        winnerText = "Białe wygrywają!";
+                        break;
+                    default:
+                        winnerText = "Remis!";
+                        break;
+                }
+
+                ViewBag.Winner = winnerText;
+            }
 
             return View( game );
         }
@@ -70,16 +100,31 @@ namespace ReversiMVC.Controllers
 
                 if ( game.PlayPieceHuman( piecePosition ) )
                 {
+                    Thread.Sleep( 100 );
                     game.PlayPieceAI();
-                }
-
-                if ( game.Board.IsEndOfGame() )
-                {
-                    game.CurrentGameState = GameState.GameEnded;
+                    stateManager.save( "game", game );
                 }
             }
 
-            stateManager.save( "game", game );
+            if ( game.CurrentGameState == GameState.GameEnded )
+            {
+                string winnerText;
+                Winner winner = game.GetWinner();
+                switch ( winner )
+                {
+                    case Winner.Black:
+                        winnerText = "Czarne wygrywają!";
+                        break;
+                    case Winner.White:
+                        winnerText = "Białe wygrywają!";
+                        break;
+                    default:
+                        winnerText = "Remis!";
+                        break;
+                }
+
+                ViewBag.Winner = winnerText;
+            }
 
             return View( "Board", game );
         }

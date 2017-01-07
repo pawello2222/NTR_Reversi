@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Reversi - Gra";
 }
+@Styles.Render( "~/Board/css" )
 
 <table class="board">
     @{
@@ -22,3 +23,18 @@
         }
     }
 </table>
+
+<div class="result">
+    @if ( Model.Turn == ReversiMVC.Models.PieceColor.White )
+    {
+        <input id="white" type="text" value="Białe: @Model.Board.GetPiecesCount( ReversiMVC.Models.PieceColor.White )" readonly style="text-decoration: underline">
+        <input id="message" type="text" value="@ViewBag.Winner" readonly>
+        <input id="black" type="text" value="Czarne: @Model.Board.GetPiecesCount( ReversiMVC.Models.PieceColor.Black )" readonly>
+    }
+    else
+    {
+        <input id="white" type="text" value="Białe: @Model.Board.GetPiecesCount( ReversiMVC.Models.PieceColor.White )" readonly>
+        <input id="message" type="text" value="@ViewBag.Winner" readonly>
+        <input id="black" type="text" value="Czarne: @Model.Board.GetPiecesCount( ReversiMVC.Models.PieceColor.Black )" readonly style="text-decoration: underline">
+    }
+</div>

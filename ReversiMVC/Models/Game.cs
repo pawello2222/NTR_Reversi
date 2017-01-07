@@ -99,6 +99,11 @@ namespace ReversiMVC.Models
         {
             this.Board.PlayPiece( this.moveProvider.GetNextMove( this.Board, this.Turn ) );
             this.NextTurn();
+
+            if ( this.Board.IsEndOfGame() )
+            {
+                CurrentGameState = GameState.GameEnded;
+            }
         }
 
         public bool PlayPieceHuman( PiecePosition piecePosition )
@@ -108,6 +113,11 @@ namespace ReversiMVC.Models
             {
                 this.Board.PlayPiece( pieceMove );
                 this.NextTurn();
+
+                if ( this.Board.IsEndOfGame() )
+                {
+                    CurrentGameState = GameState.GameEnded;
+                }
 
                 return true;
             }
