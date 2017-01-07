@@ -3,34 +3,43 @@
 }
 @Styles.Render( "~/Menu/css" )
 
-<div style="margin-top: 200px">
+<div class="menu">
+    <input id="title" type="text" value="Reversi" readonly>
+
     @using ( Html.BeginForm( "Setup", "Game", FormMethod.Post ) )
     {
         @Html.AntiForgeryToken()
-        <input type="submit" value="Nowa gra" />
+
         
-        @Html.RadioButton( "levelDifficulty", "1" )
-        @Html.Label( "Bardzo łatwy" )
 
-        @Html.RadioButton( "levelDifficulty", "2", true )
-        @Html.Label( "Łatwy" )
+        <fieldset>
+            <legend>Poziom</legend>
+            @Html.RadioButton( "levelDifficulty", "1" )
+            @Html.Label( "Bardzo łatwy" )
 
-        @Html.RadioButton( "levelDifficulty", "3" )
-        @Html.Label( "Zwykły" )
+            @Html.RadioButton( "levelDifficulty", "2", true )
+            @Html.Label( "Łatwy" )
 
-        @Html.RadioButton( "levelDifficulty", "5" )
-        @Html.Label( "Trudny" )
+            @Html.RadioButton( "levelDifficulty", "3" )
+            @Html.Label( "Zwykły" )
 
-        @Html.RadioButton( "levelDifficulty", "7" )
-        @Html.Label( "Bardzo trudny" )
+            @Html.RadioButton( "levelDifficulty", "5" )
+            @Html.Label( "Trudny" )
 
+            @Html.RadioButton( "levelDifficulty", "7" )
+            @Html.Label( "Bardzo trudny" )
+        </fieldset>
 
-        @Html.RadioButton( "color", "Black", true )
-        @Html.Label( "Czarne" )
+        <fieldset>
+            <legend>Kolor</legend>
+            @Html.RadioButton( "color", "Black", true )
+            @Html.Label( "Czarne" )
 
-        @Html.RadioButton( "color", "White" )
-        @Html.Label( "Białe" )
-
+            @Html.RadioButton( "color", "White" )
+            @Html.Label( "Białe" )
+        </fieldset>
+        
+        <input type="submit" value="Nowa gra" id="newgame"/>
     }
 
     @if ( Model == true )
@@ -38,7 +47,7 @@
         using ( Html.BeginForm( "Setup", "Game", FormMethod.Post ) )
         {
             @Html.AntiForgeryToken()
-            <input type="submit" value="Wznów grę" />
+            <input type="submit" value="Wznów grę" id="loadgame" />
         }
     }
 </div>

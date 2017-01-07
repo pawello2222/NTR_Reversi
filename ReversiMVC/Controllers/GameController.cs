@@ -20,7 +20,12 @@ namespace ReversiMVC.Controllers
         {
             Game game = stateManager.load( "game" );
 
-            return View( game != null && game.CurrentGameState != GameState.GameEnded );
+            if ( game != null && game.CurrentGameState == GameState.GameEnded )
+                game = null;
+            stateManager.save( "game", game );
+
+
+            return View( game != null );
         }
 
         [HttpPost]
@@ -49,7 +54,7 @@ namespace ReversiMVC.Controllers
             {
                 game = stateManager.load( "game" );
                 if ( game == null )
-                    return View( "Index", false );
+                    return RedirectToAction( "Index", false );
             }
 
             return RedirectToAction( "Board" );
@@ -59,7 +64,7 @@ namespace ReversiMVC.Controllers
         {
             Game game = stateManager.load( "game" );
             if ( game == null )
-                return View( "Index", false );
+                return RedirectToAction( "Index", false );
 
             if ( game.CurrentGameState == GameState.GameEnded )
             {
@@ -90,7 +95,7 @@ namespace ReversiMVC.Controllers
         {
             Game game = stateManager.load( "game" );
             if ( game == null )
-                return View( "Index", false );
+                return RedirectToAction( "Index", false );
 
             if ( field != null && field != string.Empty )
             {
@@ -100,8 +105,11 @@ namespace ReversiMVC.Controllers
 
                 if ( game.PlayPieceHuman( piecePosition ) )
                 {
-                    Thread.Sleep( 100 );
-                    game.PlayPieceAI();
+                    if ( game.CurrentGameState != GameState.GameEnded 
+                        && game.Turn != game.GetHumanPieceColor() )
+                    {
+                        game.PlayPieceAI();
+                    }
                     stateManager.save( "game", game );
                 }
             }
@@ -126,7 +134,7 @@ namespace ReversiMVC.Controllers
                 ViewBag.Winner = winnerText;
             }
 
-            return View( "Board", game );
+            return View( game );
         }
     }
 }
