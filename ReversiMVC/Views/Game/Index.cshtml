@@ -9,24 +9,22 @@
     @using ( Html.BeginForm( "Setup", "Game", FormMethod.Post ) )
     {
         @Html.AntiForgeryToken()
-
         
-
         <fieldset>
             <legend>Poziom</legend>
             @Html.RadioButton( "levelDifficulty", "1" )
             @Html.Label( "Bardzo łatwy" )
 
-            @Html.RadioButton( "levelDifficulty", "2", true )
+            @Html.RadioButton( "levelDifficulty", "3" )
             @Html.Label( "Łatwy" )
 
-            @Html.RadioButton( "levelDifficulty", "3" )
+            @Html.RadioButton( "levelDifficulty", "5", true )
             @Html.Label( "Zwykły" )
 
-            @Html.RadioButton( "levelDifficulty", "5" )
+            @Html.RadioButton( "levelDifficulty", "7" )
             @Html.Label( "Trudny" )
 
-            @Html.RadioButton( "levelDifficulty", "7" )
+            @Html.RadioButton( "levelDifficulty", "9" )
             @Html.Label( "Bardzo trudny" )
         </fieldset>
 
