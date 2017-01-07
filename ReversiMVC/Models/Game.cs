@@ -124,5 +124,12 @@ namespace ReversiMVC.Models
 
             return false;
         }
+
+        public Boolean isFieldDisabled( int row, int column )
+        {
+            PiecePosition piecePosition = new PiecePosition( row, column );
+            var pieceMove = new PieceMove( this.CurrentGameState == GameState.PlayingHumanComputer ? this.humanPieceColor : this.Turn, piecePosition );
+            return !this.Board.ValidateMove( pieceMove, false );
+        }
     }
 }

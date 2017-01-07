@@ -14,8 +14,24 @@
                         @using ( Html.BeginForm( "Board", "Game", FormMethod.Post ) )
                         {
                             @Html.AntiForgeryToken()
-                            <input type="submit" value="" class="@Model.Board.Fields[ i, j ]" />
-                            <input type="hidden" name="field" value="@i@j" />
+                            if ( @Model.Board.Fields[ i, j ] == ReversiMVC.Models.Field.Empty && Model.CurrentGameState != ReversiMVC.Models.GameState.GameEnded )
+                            {
+                                string x = "Possible";
+                                if ( @Model.GetHumanPieceColor() == ReversiMVC.Models.PieceColor.White )
+                                {
+                                    <input type="submit" value="" class="@x@Model.GetHumanPieceColor()" disabled="@Model.isFieldDisabled( i, j )" />
+                                    <input type="hidden" name="field" value="@i@j" />
+                                }
+                                else
+                                {
+                                    <input type="submit" value="" class="@x@Model.GetHumanPieceColor()" disabled="@Model.isFieldDisabled( i, j )" />
+                                    <input type="hidden" name="field" value="@i@j" />
+                                }
+                            }
+                            else
+                            {
+                                <input type="submit" value="" class="@Model.Board.Fields[ i, j ]" disabled="disabled" />
+                            }
                         }
                     </td>
                 }

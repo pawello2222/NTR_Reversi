@@ -50,10 +50,6 @@ table, th, td {
     align-self: center;
 }
 
-.board input:hover {
-
-}
-
 .board .Empty {
     background: green;
 }
@@ -63,5 +59,29 @@ table, th, td {
 }
 
 .board .Black {
+    background: black;
+}
+
+.board .PossibleWhite {
+    background: green;
+}
+
+.board .PossibleBlack {
+    background: green;
+}
+
+.board .PossibleWhite:hover:not([disabled]) {
+    background: rgba(255, 255, 255, 0.50)
+}
+
+.board .PossibleBlack:hover:not([disabled]) {
+    background: rgba(0, 0, 0, 0.50)
+}
+
+.board .PossibleWhite:active:not([disabled]) {
+    background: white;
+}
+
+.board .PossibleBlack:active:not([disabled]) {
     background: black;
 }

@@ -22,8 +22,8 @@ namespace ReversiMVC.Controllers
 
             if ( game != null && game.CurrentGameState == GameState.GameEnded )
                 game = null;
-            stateManager.save( "game", game );
 
+            stateManager.save( "game", game );
 
             return View( game != null );
         }
@@ -66,6 +66,14 @@ namespace ReversiMVC.Controllers
             if ( game == null )
                 return RedirectToAction( "Index", false );
 
+
+            if ( game.CurrentGameState != GameState.GameEnded
+                && game.Turn != game.GetHumanPieceColor() )
+            {
+                game.PlayPieceAI();
+                stateManager.save( "game", game );
+            }
+
             if ( game.CurrentGameState == GameState.GameEnded )
             {
                 string winnerText;
@@ -105,7 +113,7 @@ namespace ReversiMVC.Controllers
 
                 if ( game.PlayPieceHuman( piecePosition ) )
                 {
-                    if ( game.CurrentGameState != GameState.GameEnded 
+                    if ( game.CurrentGameState != GameState.GameEnded
                         && game.Turn != game.GetHumanPieceColor() )
                     {
                         game.PlayPieceAI();
