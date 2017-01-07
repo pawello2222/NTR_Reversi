@@ -70,18 +70,18 @@ table, th, td {
     background: green;
 }
 
-.board .PossibleWhite:hover:not([disabled]) {
+.board .PossibleWhite:hover:enabled {
     background: rgba(255, 255, 255, 0.50)
 }
 
-.board .PossibleBlack:hover:not([disabled]) {
+.board .PossibleBlack:hover:enabled {
     background: rgba(0, 0, 0, 0.50)
 }
 
-.board .PossibleWhite:active:not([disabled]) {
+.board .PossibleWhite:active:enabled {
     background: white;
 }
 
-.board .PossibleBlack:active:not([disabled]) {
+.board .PossibleBlack:active:enabled {
     background: black;
 }

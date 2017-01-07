@@ -45,7 +45,6 @@ namespace ReversiMVC.Controllers
                 else
                 {
                     game.PlayHumanComputer( PieceColor.White );
-                    game.PlayPieceAI();
                 }
 
                 stateManager.save( "game", game );
@@ -65,8 +64,7 @@ namespace ReversiMVC.Controllers
             Game game = stateManager.load( "game" );
             if ( game == null )
                 return RedirectToAction( "Index", false );
-
-
+            
             if ( game.CurrentGameState != GameState.GameEnded
                 && game.Turn != game.GetHumanPieceColor() )
             {
